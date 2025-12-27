@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>時間の足し算 | beyondS</title>
+  <meta name="description" content="hh:mm:ss 形式の時間を足し算します。2つの時間の合計と複数行の一括合計に対応。">
+  <link rel="stylesheet" href="./main.css">
+  <link rel="icon" href="./images/yoko_blue_mini.png">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container inner">
+      <a class="brand" href="./index.html">
+        <img src="./images/yoko_blue_mini.png" alt="beyondS ロゴ">
+        <span>beyondS ツール</span>
+      </a>
+      <nav class="site-nav" aria-label="主要メニュー">
+        <a href="./index.html#util">便利ツール</a>
+        <a href="./index.html#dev">プログラミング</a>
+        <a href="./index.html#web">ウェブ制作</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <section class="hero">
+        <h1>時間の足し算</h1>
+        <p>hh:mm:ss 形式の時間を足し算します。複数行をまとめて合計することもできます。</p>
+      </section>
+
+      <section class="section surface">
+        <div class="section-head">
+          <h2>2つの時間を合計</h2>
+        </div>
+        <div class="tool-panel">
+          <div class="inline-controls">
+            <input type="text" id="t1" placeholder="例 5:32 または 01:06:27">
+            +
+            <input type="text" id="t2" placeholder="例 1:06:27">
+            <button type="button" class="btn btn-primary" onclick="calcTwo()">計算</button>
+          </div>
+          <div class="stack">
+            <label for="a1">結果</label>
+            <input type="text" id="a1" readonly>
+          </div>
+        </div>
+      </section>
+
+      <section class="section surface">
+        <div class="section-head">
+          <h2>複数の時間をまとめて合計</h2>
+        </div>
+        <div class="tool-panel">
+          <div class="stack">
+            <label for="lines">1行に1つずつ時間を書いてください</label>
+            <textarea id="lines" rows="8" placeholder="5:32&#10;1:06:27&#10;10:27"></textarea>
+          </div>
+          <div class="inline-controls">
+            <button type="button" class="btn btn-primary" onclick="calcLines()">計算</button>
+            <button type="button" class="btn btn-ghost" onclick="resetFields()">リセット</button>
+          </div>
+          <div class="stack">
+            <label for="a2">合計</label>
+            <input type="text" id="a2" readonly>
+            <p class="note">mm:ss、hh:mm:ss のいずれも入力できます。空行は無視します。</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+  <script>
+    function timeToSeconds(str) {
+      if (!str) return 0;
+      const parts = str.trim().split(":").map(Number);
+      if (parts.some(isNaN)) return NaN;
+      if (parts.length === 1) return parts[0];
+      if (parts.length === 2) return parts[0] * 60 + parts[1];
+      return parts[0] * 3600 + parts[1] * 60 + parts[2];
+    }
+
+    function secondsToTime(sec) {
+      const s = Math.max(0, Math.round(sec));
+      const h = Math.floor(s / 3600);
+      const m = Math.floor((s % 3600) / 60);
+      const r = s % 60;
+      const pad = n => n.toString().padStart(2, "0");
+      return `${pad(h)}:${pad(m)}:${pad(r)}`;
+    }
+
+    function calcTwo() {
+      const total = timeToSeconds(document.getElementById("t1").value) +
+                    timeToSeconds(document.getElementById("t2").value);
+      if (Number.isNaN(total)) {
+        alert("hh:mm:ss または mm:ss 形式で入力してください。");
+        return;
+      }
+      document.getElementById("a1").value = secondsToTime(total);
+    }
+
+    function calcLines() {
+      const lines = document.getElementById("lines").value.split(/\r?\n/);
+      let total = 0;
+      for (const line of lines) {
+        if (!line.trim()) continue;
+        const sec = timeToSeconds(line);
+        if (Number.isNaN(sec)) {
+          alert(`形式が正しくありません: ${line}`);
+          return;
+        }
+        total += sec;
+      }
+      document.getElementById("a2").value = secondsToTime(total);
+    }
+
+    function resetFields() {
+      ["t1","t2","a1","a2","lines"].forEach(id => document.getElementById(id).value = "");
+    }
+  </script>
+  <script src="./js/footer.js"></script>
+</body>
+</html>

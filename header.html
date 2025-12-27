@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cヘッダ生成 | beyondS</title>
+  <meta name="description" content="C言語ソースから関数宣言やインクルード行を抜き出してヘッダ雛形を生成します。">
+  <link rel="stylesheet" href="./main.css">
+  <link rel="icon" href="./images/yoko_blue_mini.png">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container inner">
+      <a class="brand" href="./index.html">
+        <img src="./images/yoko_blue_mini.png" alt="beyondS ロゴ">
+        <span>beyondS ツール</span>
+      </a>
+      <nav class="site-nav" aria-label="主要メニュー">
+        <a href="./index.html#util">便利ツール</a>
+        <a href="./index.html#dev">プログラミング</a>
+        <a href="./index.html#web">ウェブ制作</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <section class="hero">
+        <h1>Cヘッダ自動生成</h1>
+        <p>Cソースから関数宣言やinclude行を抽出して、ヘッダファイルの雛形を作ります。</p>
+      </section>
+
+      <section class="section surface">
+        <div class="section-head">
+          <h2>ソースを貼り付け</h2>
+        </div>
+
+        <div class="tool-panel">
+          <div class="stack">
+            <label for="source">Cソース</label>
+            <textarea id="source" rows="12" placeholder="#include 〜 や 関数定義を含むコードを貼り付けてください"></textarea>
+          </div>
+
+          <div class="inline-controls">
+            <button type="button" class="btn btn-primary" onclick="makeHeaders()">ヘッダを生成</button>
+            <button type="button" class="btn btn-ghost" onclick="resetFields()">リセット</button>
+          </div>
+
+          <div class="stack">
+            <label for="header">生成結果</label>
+            <textarea id="header" rows="12" placeholder="関数宣言がここに表示されます"></textarea>
+            <p class="note">ブロック { ... } を削除して関数宣言行を抽出しています。複雑なマクロやコメントには対応しない簡易版です。</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+  <script>
+    function deleteBlocks(str) {
+      let s = str;
+      while (true) {
+        const close = s.indexOf("}");
+        if (close < 0) break;
+        const open = s.lastIndexOf("{", close);
+        if (open < 0) break;
+        s = s.slice(0, open) + s.slice(close + 1);
+      }
+      return s;
+    }
+
+    function makeHeaders() {
+      let header = deleteBlocks(document.getElementById("source").value);
+      header = header.replace(/\)/g, ");");
+      header = header.replace(/; *\n{2,}/g, ";\n");
+      document.getElementById("header").value = header.trim();
+    }
+
+    function resetFields() {
+      document.getElementById("source").value = "";
+      document.getElementById("header").value = "";
+    }
+  </script>
+  <script src="./js/footer.js"></script>
+</body>
+</html>

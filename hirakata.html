@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ひらがな・カタカナ変換 | beyondS</title>
+  <meta name="description" content="ひらがなとカタカナを相互変換します。テキストを貼り付けてボタンを押すだけ。">
+  <link rel="stylesheet" href="./main.css">
+  <link rel="icon" href="./images/yoko_blue_mini.png">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container inner">
+      <a class="brand" href="./index.html">
+        <img src="./images/yoko_blue_mini.png" alt="beyondS ロゴ">
+        <span>beyondS ツール</span>
+      </a>
+      <nav class="site-nav" aria-label="主要メニュー">
+        <a href="./index.html#util">便利ツール</a>
+        <a href="./index.html#dev">プログラミング</a>
+        <a href="./index.html#web">ウェブ制作</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <section class="hero">
+        <h1>ひらがな・カタカナ変換</h1>
+        <p>平仮名と片仮名を相互に変換します。文章を貼り付けてワンクリック。</p>
+      </section>
+
+      <section class="section surface">
+        <div class="section-head">
+          <h2>変換</h2>
+        </div>
+
+        <div class="tool-panel">
+          <div class="stack">
+            <label for="kanaInput">入力テキスト</label>
+            <textarea id="kanaInput" rows="10" placeholder="ここにテキストを貼り付けてください"></textarea>
+          </div>
+
+          <div class="inline-controls">
+            <button type="button" class="btn btn-primary" onclick="toHira()">カタカナ → ひらがな</button>
+            <button type="button" class="btn btn-ghost" onclick="toKata()">ひらがな → カタカナ</button>
+          </div>
+
+          <div class="stack">
+            <label for="kanaOutput">出力テキスト</label>
+            <textarea id="kanaOutput" rows="10" placeholder="結果がここに表示されます"></textarea>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+  <script>
+    function kataToHira(str) {
+      return str.replace(/[\u30a1-\u30f6]/g, ch =>
+        String.fromCharCode(ch.charCodeAt(0) - 0x60)
+      );
+    }
+
+    function hiraToKata(str) {
+      return str.replace(/[\u3041-\u3096]/g, ch =>
+        String.fromCharCode(ch.charCodeAt(0) + 0x60)
+      );
+    }
+
+    function toHira() {
+      const src = document.getElementById("kanaInput").value;
+      document.getElementById("kanaOutput").value = kataToHira(src);
+    }
+
+    function toKata() {
+      const src = document.getElementById("kanaInput").value;
+      document.getElementById("kanaOutput").value = hiraToKata(src);
+    }
+  </script>
+  <script src="./js/footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PHPソースハイライト（サンプル） | beyondS</title>
+  <meta name="description" content="PHPソースハイライトツールのサンプルコードです。">
+  <link rel="stylesheet" href="./main.css">
+  <link rel="icon" href="./images/yoko_blue_mini.png">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container inner">
+      <a class="brand" href="./index.html">
+        <img src="./images/yoko_blue_mini.png" alt="beyondS ロゴ">
+        <span>beyondS ツール</span>
+      </a>
+      <nav class="site-nav" aria-label="主要メニュー">
+        <a href="./index.html#dev">プログラミング</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <section class="hero">
+        <h1>PHPソースハイライト（サンプル）</h1>
+        <p>実際の動作は <a href="./highlight.php">PHPソースハイライト</a> をご利用ください。</p>
+      </section>
+
+      <section class="section surface">
+        <div class="stack">
+          <label>サンプルコード</label>
+          <pre class="scroll-area"><code>&lt;?php echo highlight_string('echo &quot;hello&quot;;', true); ?&gt;</code></pre>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+  <script src="./js/footer.js"></script>
+</body>
+</html>

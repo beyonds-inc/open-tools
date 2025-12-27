@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>便利Webツール集 | beyondS</title>
+  <meta name="description" content="ブラウザだけで使えるシンプルなWebツールをまとめました。文字数カウント、タグ変換、CSV/JSON変換など開発・運用に役立つユーティリティです。">
+  <link rel="stylesheet" href="./main.css">
+  <link rel="icon" href="./images/yoko_blue_mini.png">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container inner">
+      <a class="brand" href="#top">
+        <img src="./images/yoko_blue_mini.png" alt="beyondS ロゴ">
+        <span>beyondS ツール</span>
+      </a>
+      <nav class="site-nav" aria-label="主要メニュー">
+        <a href="#web">ウェブ制作</a>
+        <a href="#dev">プログラミング</a>
+        <a href="#util">便利ツール</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page" id="top">
+    <div class="container">
+      <section class="hero">
+        <h1>ブラウザで完結する<br>シンプルなWebユーティリティ集</h1>
+        <p>ブラウザだけで処理されているので、データは保存されません。</p>
+      </section>
+
+      <section class="section" id="util">
+        <div class="section-head">
+          <h2>便利ツール</h2>
+          <p>日付計算や文字種変換など、日常で使える小ツール。</p>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <h3>文字数カウント</h3>
+            <p>テキストの文字数をリアルタイムで計測。</p>
+            <a class="cta" href="mojisu.html">開く →</a>
+          </article>
+          <article class="card">
+            <h3>ひらがな・カタカナ変換</h3>
+            <p>平仮名と片仮名を相互変換。</p>
+            <a class="cta" href="hirakata.html">開く →</a>
+          </article>
+          <article class="card">
+            <h3>10進数・16進数変換</h3>
+            <p>整数を10進/16進で相互変換。</p>
+            <a class="cta" href="16.html">開く →</a>
+          </article>
+          <article class="card">
+            <h3>時間の足し算</h3>
+            <p>時分秒の合計を計算。</p>
+            <a class="cta" href="timetasizan.html">開く →</a>
+          </article>
+          <article class="card">
+            <h3>月計算</h3>
+            <p>月数の加減算や差分を計算。</p>
+            <a class="cta" href="month_calc.html">開く →</a>
+          </article>
+          <article class="card">
+            <h3>曜日計算</h3>
+            <p>年月日から曜日を算出。</p>
+            <a class="cta" href="dayofweek.html">開く →</a>
+          </article>
+          <article class="card">
+            <h3>カレンダー生成</h3>
+            <p>指定年月のカレンダーを生成。</p>
+            <a class="cta" href="calendar.html">開く →</a>
+          </article>
+          <article class="card">
+            <span class="pill">PHP</span>
+            <h3>ウェブページをテキストに変換</h3>
+            <p>HTMLタグを除去して本文テキストだけを抽出。メール送信も可能。</p>
+            <a class="cta" href="tostr.php">開く →</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="dev">
+        <div class="section-head">
+          <h2>プログラミング向け</h2>
+          <p>ソース整形やデータ変換など、開発補助ツール。</p>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <h3>CSV → JSON</h3>
+            <p>CSVを配列形式のJSONに即時変換。</p>
+            <a class="cta" href="csv2json.html">開く →</a>
+          </article>
+          <article class="card">
+            <h3>JSON → NDJSON</h3>
+            <p>JSON配列を1行ずつのNDJSONへ。</p>
+            <a class="cta" href="json2ndjson.html">開く →</a>
+          </article>
+          <article class="card">
+            <h3>BASE64デコーダー</h3>
+            <p>BASE64文字列をデコードして表示。</p>
+            <a class="cta" href="base64decoder.html">開く →</a>
+          </article>
+          <article class="card">
+            <h3>Cヘッダ自動生成</h3>
+            <p>Cソースから include と関数宣言を抽出。</p>
+            <a class="cta" href="header.html">開く →</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="web">
+        <div class="section-head">
+          <h2>ウェブ制作向け</h2>
+          <p>タグ変換や文字数チェックなど、コンテンツ制作を助けるツール。</p>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <h3>タグ無効化変換</h3>
+            <p>「&lt;&gt;&amp;」のエスケープ／復元をワンクリックで。</p>
+            <a class="cta" href="tag.html">開く →</a>
+          </article>
+          <article class="card">
+            <h3>改行→br/p 変換</h3>
+            <p>テキストの改行を `&lt;br&gt;` または `&lt;p&gt;` に一括変換。</p>
+            <a class="cta" href="pbr.html">開く →</a>
+          </article>
+          <article class="card">
+            <h3>改行→li リスト化</h3>
+            <p>行ごとに `&lt;li&gt;` を付けて HTML リストを生成。</p>
+            <a class="cta" href="li.html">開く →</a>
+          </article>
+          <article class="card">
+            <h3>サイトマップ変換</h3>
+            <p>サイトマップXMLからURL一覧を抽出。</p>
+            <a class="cta" href="sitemap2urls.html">開く →</a>
+          </article>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.card').forEach(card => {
+        const link = card.querySelector('.cta');
+        if (!link) return;
+        card.setAttribute('tabindex', '0');
+        const go = () => window.location.assign(link.href);
+        card.addEventListener('click', (e) => {
+          if (e.target.closest('a')) return;
+          go();
+        });
+        card.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            go();
+          }
+        });
+      });
+    });
+  </script>
+  <script src="./js/footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BASE64デコーダー | beyondS</title>
+  <meta name="description" content="BASE64文字列をデコードしてテキストを表示します。">
+  <link rel="stylesheet" href="./main.css">
+  <link rel="icon" href="./images/yoko_blue_mini.png">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container inner">
+      <a class="brand" href="./index.html">
+        <img src="./images/yoko_blue_mini.png" alt="beyondS ロゴ">
+        <span>beyondS ツール</span>
+      </a>
+      <nav class="site-nav" aria-label="主要メニュー">
+        <a href="./index.html#util">便利ツール</a>
+        <a href="./index.html#dev">プログラミング</a>
+        <a href="./index.html#web">ウェブ制作</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <section class="hero">
+        <h1>BASE64デコーダー</h1>
+        <p>BASE64文字列をテキストにデコードします。</p>
+      </section>
+
+      <section class="section surface">
+        <div class="section-head">
+          <h2>デコード</h2>
+        </div>
+        <div class="tool-panel">
+          <div class="stack">
+            <label for="b64Input">BASE64文字列</label>
+            <textarea id="b64Input" rows="10" placeholder="ここにBASE64文字列を貼り付けてください"></textarea>
+          </div>
+          <div class="inline-controls">
+            <button type="button" class="btn btn-primary" onclick="decodeB64()">変換</button>
+            <button type="button" class="btn btn-ghost" onclick="resetFields()">リセット</button>
+          </div>
+          <div class="stack">
+            <label for="b64Output">デコード結果</label>
+            <textarea id="b64Output" rows="10" placeholder="結果がここに表示されます"></textarea>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+  <script>
+    function decodeB64() {
+      const input = document.getElementById("b64Input").value.trim();
+      try {
+        const decoded = atob(input);
+        document.getElementById("b64Output").value = decoded;
+      } catch (e) {
+        alert("BASE64として解釈できません。");
+      }
+    }
+
+    function resetFields() {
+      document.getElementById("b64Input").value = "";
+      document.getElementById("b64Output").value = "";
+    }
+  </script>
+  <script src="./js/footer.js"></script>
+</body>
+</html>

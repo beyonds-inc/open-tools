@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>文字数カウント | beyondS</title>
+  <meta name="description" content="テキストの文字数をリアルタイムにカウントします。改行を1文字に含める設定あり。">
+  <link rel="stylesheet" href="./main.css">
+  <link rel="icon" href="./images/yoko_blue_mini.png">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container inner">
+      <a class="brand" href="./index.html">
+        <img src="./images/yoko_blue_mini.png" alt="beyondS ロゴ">
+        <span>beyondS ツール</span>
+      </a>
+      <nav class="site-nav" aria-label="主要メニュー">
+        <a href="./index.html#util">便利ツール</a>
+        <a href="./index.html#dev">プログラミング</a>
+        <a href="./index.html#web">ウェブ制作</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <section class="hero">
+        <h1>文字数カウント</h1>
+        <p>テキストの文字数を即時カウント。改行を1文字として数えるかどうか切り替えできます。</p>
+      </section>
+
+      <section class="section surface">
+        <div class="section-head">
+          <h2>入力してカウント</h2>
+        </div>
+
+        <div class="tool-panel">
+          <div class="stack">
+            <label for="textInput">テキスト</label>
+            <textarea id="textInput" rows="12" placeholder="ここに入力または貼り付けしてください"></textarea>
+          </div>
+
+          <div class="inline-controls">
+            <label><input type="checkbox" id="countNewline" checked> 改行を1文字として数える</label>
+          </div>
+
+          <div class="stack">
+            <label for="countResult">文字数</label>
+            <input id="countResult" type="text" readonly value="0">
+            <p class="note">全角・半角とも1文字として数えます。</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+  <script>
+    const input = document.getElementById("textInput");
+    const countNewline = document.getElementById("countNewline");
+    const result = document.getElementById("countResult");
+
+    function updateCount() {
+      let text = input.value;
+      if (countNewline.checked) {
+        text = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+      } else {
+        text = text.replace(/\r\n/g, "").replace(/\r/g, "").replace(/\n/g, "");
+      }
+      result.value = text.length;
+    }
+
+    input.addEventListener("input", updateCount);
+    countNewline.addEventListener("change", updateCount);
+    document.addEventListener("DOMContentLoaded", updateCount);
+  </script>
+  <script src="./js/footer.js"></script>
+</body>
+</html>

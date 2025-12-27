@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>タグ無効化変換 | beyondS</title>
+  <meta name="description" content="HTMLタグの &lt;&gt;&amp; をエスケープ／復元するシンプルなツール。コピー＆ペーストですぐ使えます。">
+  <link rel="stylesheet" href="./main.css">
+  <link rel="icon" href="./images/yoko_blue_mini.png">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container inner">
+      <a class="brand" href="./index.html">
+        <img src="./images/yoko_blue_mini.png" alt="beyondS ロゴ">
+        <span>beyondS ツール</span>
+      </a>
+      <nav class="site-nav" aria-label="主要メニュー">
+        <a href="./index.html#util">便利ツール</a>
+        <a href="./index.html#dev">プログラミング</a>
+        <a href="./index.html#web">ウェブ制作</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <section class="hero">
+        <h1>タグ無効化変換</h1>
+        <p>HTMLタグをそのまま表示したいときに、&lt;&gt;&amp; を一括でエスケープ／復元します。</p>
+      </section>
+
+      <section class="section surface">
+        <div class="section-head">
+          <h2>エスケープ／復元</h2>
+        </div>
+
+        <div class="tool-panel">
+          <div class="stack">
+            <label for="beforeText">変換前テキスト</label>
+            <textarea id="beforeText" rows="8" placeholder="ここにHTMLを貼り付けてください"></textarea>
+          </div>
+
+          <div class="inline-controls">
+            <button type="button" class="btn btn-primary" onclick="escapeTag()">タグ無効化（エスケープ）</button>
+            <button type="button" class="btn btn-ghost" onclick="unescapeTag()">タグ有効化（復元）</button>
+          </div>
+
+          <div class="stack">
+            <label for="afterText">変換後テキスト</label>
+            <textarea id="afterText" rows="8" placeholder="ここに結果が表示されます"></textarea>
+            <p class="note">コピー＆ペーストでご利用ください。</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+  <script>
+    function escapeTag() {
+      const before = document.getElementById("beforeText").value;
+      const after = before
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+      document.getElementById("afterText").value = after;
+    }
+
+    function unescapeTag() {
+      const before = document.getElementById("beforeText").value;
+      const after = before
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/&amp;/g, "&");
+      document.getElementById("afterText").value = after;
+    }
+  </script>
+  <script src="./js/footer.js"></script>
+</body>
+</html>

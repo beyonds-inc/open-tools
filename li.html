@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>改行→liリスト変換 | beyondS</title>
+  <meta name="description" content="改行区切りのテキストを &lt;ul&gt;&lt;li&gt; リストに一括変換します。空行はスキップ可能。">
+  <link rel="stylesheet" href="./main.css">
+  <link rel="icon" href="./images/yoko_blue_mini.png">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container inner">
+      <a class="brand" href="./index.html">
+        <img src="./images/yoko_blue_mini.png" alt="beyondS ロゴ">
+        <span>beyondS ツール</span>
+      </a>
+      <nav class="site-nav" aria-label="主要メニュー">
+        <a href="./index.html#util">便利ツール</a>
+        <a href="./index.html#dev">プログラミング</a>
+        <a href="./index.html#web">ウェブ制作</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <section class="hero">
+        <h1>改行 → liタグ変換</h1>
+        <p>改行区切りのテキストを、&lt;ul&gt;&lt;li&gt; 形式のHTMLリストへ変換します。</p>
+      </section>
+
+      <section class="section surface">
+        <div class="section-head">
+          <h2>テキストをリスト化</h2>
+        </div>
+
+        <div class="tool-panel">
+          <div class="stack">
+            <label for="listInput">入力テキスト</label>
+            <textarea id="listInput" rows="12" placeholder="1行が1つのリスト項目です"></textarea>
+          </div>
+
+          <div class="inline-controls">
+            <label><input type="checkbox" id="skipEmpty" checked> 空行をスキップ</label>
+          </div>
+
+          <div class="inline-controls">
+            <button type="button" class="btn btn-primary" onclick="convert()">リストに変換</button>
+            <button type="button" class="btn btn-ghost" onclick="resetFields()">リセット</button>
+          </div>
+
+          <div class="stack">
+            <label for="listOutput">変換後HTML</label>
+            <textarea id="listOutput" rows="12" placeholder="結果がここに表示されます"></textarea>
+            <p class="note">`<ul>` を `<ol>` に置き換えれば番号付きリストにもできます。</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+  <script>
+    function convert() {
+      const src = document.getElementById("listInput").value.replace(/\r\n?/g, "\n");
+      const skipEmpty = document.getElementById("skipEmpty").checked;
+      const lines = src.split("\n").filter(line => skipEmpty ? line.trim() !== "" : true);
+      const items = lines.map(line => `  <li>${line}</li>`).join("\n");
+      const html = `<ul>\n${items}\n</ul>`;
+      document.getElementById("listOutput").value = html;
+    }
+
+    function resetFields() {
+      document.getElementById("listInput").value = "";
+      document.getElementById("listOutput").value = "";
+    }
+  </script>
+  <script src="./js/footer.js"></script>
+</body>
+</html>

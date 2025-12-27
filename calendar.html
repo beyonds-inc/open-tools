@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>カレンダー生成 | beyondS</title>
+  <meta name="description" content="指定年月のカレンダーを生成し、曜日ごとにフィルターできます。祝日APIで祝日を取得し除外も可能。">
+  <link rel="stylesheet" href="./main.css">
+  <link rel="icon" href="./images/yoko_blue_mini.png">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container inner">
+      <a class="brand" href="./index.html">
+        <img src="./images/yoko_blue_mini.png" alt="beyondS ロゴ">
+        <span>beyondS ツール</span>
+      </a>
+      <nav class="site-nav" aria-label="主要メニュー">
+        <a href="./index.html#util">便利ツール</a>
+        <a href="./index.html#dev">プログラミング</a>
+        <a href="./index.html#web">ウェブ制作</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <section class="hero">
+        <h1>カレンダー生成</h1>
+        <p>指定年月のカレンダーを生成し、指定曜日のみ抽出した一覧を作れます。祝日を除外するオプション付き。</p>
+      </section>
+
+      <section class="section surface" id="calapp">
+        <div class="two-col">
+          <div class="stack">
+            <label for="calYear">対象年月</label>
+            <div class="date-controls">
+              <span class="date-unit">
+                <select class="date-input" v-model="year" id="calYear">
+                  <option v-for="y in years" :value="y">{{ y }}</option>
+                </select>
+                <span>年</span>
+              </span>
+              <span class="date-unit">
+                <select class="date-input" v-model="month">
+                  <option v-for="m in months" :value="m">{{ m }}</option>
+                </select>
+                <span>月</span>
+              </span>
+              <button class="btn btn-primary" type="button" v-on:click="calc">生成</button>
+            </div>
+          </div>
+          <div class="stack">
+            <label>抽出する曜日</label>
+            <div class="inline-controls">
+              <label v-for="w in weekdays">
+                <input type="checkbox" :value="w" v-model="selectedDays">
+                {{ moment().day(w).format('ddd') }}
+              </label>
+            </div>
+            <label><input type="checkbox" value="1" v-model="exceptHoliday"> 祝日を除く</label>
+          </div>
+        </div>
+
+        <div class="stack">
+          <label for="calResults">出力</label>
+          <textarea id="calResults" rows="10" v-model="results"></textarea>
+        </div>
+
+        <div class="stack" v-if="holidays.length">
+          <label>祝日一覧（当月）</label>
+          <div class="scroll-area">
+            <ul class="tag-list">
+              <li v-for="holiday in holidays">{{holiday}}</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+  <script src="./js/vue.min.js"></script>
+  <script src="./js/moment-with-locales.min.js"></script>
+  <script>
+    moment.locale('ja');
+    var range = function(from, to) {
+      var results = [];
+      for (var i = from; i <= to; i++) results.push(i);
+      return results;
+    }
+    var calapp = new Vue({
+      el: '#calapp',
+      data: {
+        years: [],
+        months: [],
+        weekdays: [],
+        year: moment().format('YYYY'),
+        month: moment().format('M'),
+        selectedDays: range(0, 6),
+        exceptHoliday: 0,
+        holidays: [],
+        results: '',
+        format: 'YYYY-MM-DD(ddd)'
+      },
+      mounted: function() {
+        this.years = range(moment().subtract(5,'years').format('YYYY'), moment().add(5,'years').format('YYYY'));
+        this.months = range(1, 12);
+        this.weekdays = range(0, 6);
+        this.calc();
+      },
+      methods: {
+        calc: async function() {
+          await this.updateHolidays();
+          this.results = this.calcDays().join("\n");
+        },
+        calcDays: function() {
+          var days = [];
+          var start = moment({ year: parseInt(this.year), month: this.month - 1, date: 1 });
+          do {
+            if (this.selectedDays.indexOf(start.weekday()) !== -1) {
+              if (!this.exceptHoliday || this.holidays.indexOf(start.format('YYYY-MM-DD')) === -1) {
+                days.push(start.format(this.format));
+              }
+            }
+            start.add(1, 'days');
+          } while (start.date() != 1);
+          return days;
+        },
+        updateHolidays: async function() {
+          var month = moment({ year: parseInt(this.year), month: this.month - 1, date: 1 });
+          try {
+            const response = await fetch('http://api.national-holidays.jp/' + month.format('YYYY-MM'));
+            const holidays = await response.json();
+            if (holidays.error) {
+              this.holidays = [];
+              return;
+            }
+            this.holidays = holidays.map(data => data.date);
+          } catch (e) {
+            this.holidays = [];
+          }
+        }
+      }
+    });
+  </script>
+  <script src="./js/footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>改行をbr/pタグに変換 | beyondS</title>
+  <meta name="description" content="プレーンテキストの改行を &lt;br&gt; または &lt;p&gt; に置き換えてHTML化するツール。XHTML出力やブロック要素除外に対応。">
+  <link rel="stylesheet" href="./main.css">
+  <link rel="icon" href="./images/yoko_blue_mini.png">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container inner">
+      <a class="brand" href="./index.html">
+        <img src="./images/yoko_blue_mini.png" alt="beyondS ロゴ">
+        <span>beyondS ツール</span>
+      </a>
+      <nav class="site-nav" aria-label="主要メニュー">
+        <a href="./index.html#util">便利ツール</a>
+        <a href="./index.html#dev">プログラミング</a>
+        <a href="./index.html#web">ウェブ制作</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <section class="hero">
+        <h1>改行をbr/pタグに変換</h1>
+        <p>プレーンテキストをパラグラフと改行に変換して、HTML化します。XHTML形式出力にも対応。</p>
+      </section>
+
+      <section class="section surface">
+        <div class="section-head">
+          <h2>テキストを貼り付け</h2>
+        </div>
+
+        <div class="tool-panel">
+          <div class="stack">
+            <label for="inputText">変換前テキスト</label>
+            <textarea id="inputText" rows="12" placeholder="ここに変換したいテキストを貼り付けてください"></textarea>
+          </div>
+
+          <div class="inline-controls">
+            <label><input type="checkbox" id="xhtml" checked> XHTML形式（&lt;br /&gt;）</label>
+            <label><input type="checkbox" id="avoidBlock" checked> h1/h2/div/ul/ol/li などを p で囲まない</label>
+          </div>
+
+          <div class="inline-controls">
+            <button type="button" class="btn btn-primary" onclick="convert()">変換する</button>
+            <button type="button" class="btn btn-ghost" onclick="resetFields()">リセット</button>
+          </div>
+
+          <div class="stack">
+            <label for="outputText">変換後HTML</label>
+            <textarea id="outputText" rows="12" placeholder="結果がここに表示されます"></textarea>
+            <p class="note">2行以上の連続改行で段落を区切り、1行改行は &lt;br&gt; に置き換えます。</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+  <script>
+    function normalizeLines(text) {
+      return text.replace(/\r\n?/g, "\n");
+    }
+
+    function convert() {
+      const src = normalizeLines(document.getElementById("inputText").value);
+      const useXhtml = document.getElementById("xhtml").checked;
+      const avoidBlock = document.getElementById("avoidBlock").checked;
+      const brTag = useXhtml ? "<br />" : "<br>";
+
+      const paragraphs = src.split(/\n{2,}/);
+      const htmlParagraphs = paragraphs.map(p =>
+        `<p>${p.replace(/\n/g, brTag + "\n")}</p>`
+      );
+
+      let html = htmlParagraphs.join("\n");
+
+      if (avoidBlock) {
+        const blocks = ["h1","h2","h3","h4","h5","h6","div","ul","ol","li"];
+        const openPattern = new RegExp(`<p>\\s*<(?:${blocks.join("|")})`, "gi");
+        const closePattern = new RegExp(`</(?:${blocks.join("|")})>\\s*</p>`, "gi");
+        html = html.replace(openPattern, match => match.replace("<p>", ""));
+        html = html.replace(closePattern, match => match.replace("</p>", ""));
+        html = html.replace(/<\/li>\s*<br\s*\/?>/gi, "</li>");
+        html = html.replace(/<ul>\s*<br\s*\/?>/gi, "<ul>");
+        html = html.replace(/<ol>\s*<br\s*\/?>/gi, "<ol>");
+      }
+
+      document.getElementById("outputText").value = html;
+    }
+
+    function resetFields() {
+      document.getElementById("inputText").value = "";
+      document.getElementById("outputText").value = "";
+    }
+  </script>
+  <script src="./js/footer.js"></script>
+</body>
+</html>

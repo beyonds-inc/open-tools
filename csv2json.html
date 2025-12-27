@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSV → JSON 変換 | beyondS</title>
+  <meta name="description" content="CSVを配列形式のJSONに変換します。1行が1配列要素。">
+  <link rel="stylesheet" href="./main.css">
+  <link rel="icon" href="./images/yoko_blue_mini.png">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container inner">
+      <a class="brand" href="./index.html">
+        <img src="./images/yoko_blue_mini.png" alt="beyondS ロゴ">
+        <span>beyondS ツール</span>
+      </a>
+      <nav class="site-nav" aria-label="主要メニュー">
+        <a href="./index.html#util">便利ツール</a>
+        <a href="./index.html#dev">プログラミング</a>
+        <a href="./index.html#web">ウェブ制作</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <section class="hero">
+        <h1>CSV → JSON 変換</h1>
+        <p>1行ごとに配列へ変換し、JSON配列として出力します。</p>
+      </section>
+
+      <section class="section surface">
+        <div class="section-head">
+          <h2>CSVを貼り付け</h2>
+        </div>
+        <div class="tool-panel">
+          <div class="stack">
+            <label for="csvInput">CSV</label>
+            <textarea id="csvInput" rows="10" placeholder="col1,col2&#10;foo,bar"></textarea>
+          </div>
+          <div class="inline-controls">
+            <button type="button" class="btn btn-primary" onclick="convert()">変換</button>
+            <button type="button" class="btn btn-ghost" onclick="resetFields()">リセット</button>
+          </div>
+          <div class="stack">
+            <label for="jsonOutput">JSON</label>
+            <textarea id="jsonOutput" rows="10" placeholder="[\"...\"] がここに表示されます"></textarea>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+  <script>
+    function convert() {
+      const lines = document.getElementById("csvInput").value.replace(/\r\n?/g, "\n").split("\n");
+      const rows = lines.filter(l => l.trim() !== "").map(l => l.split(","));
+      const json = JSON.stringify(rows, null, 2);
+      document.getElementById("jsonOutput").value = json;
+    }
+
+    function resetFields() {
+      document.getElementById("csvInput").value = "";
+      document.getElementById("jsonOutput").value = "";
+    }
+  </script>
+  <script src="./js/footer.js"></script>
+</body>
+</html>

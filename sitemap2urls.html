@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>サイトマップXML → URL一覧 | beyondS</title>
+  <meta name="description" content="Sitemap XMLを貼り付けてURL一覧を抽出します。">
+  <link rel="stylesheet" href="./main.css">
+  <link rel="icon" href="./images/yoko_blue_mini.png">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container inner">
+      <a class="brand" href="./index.html">
+        <img src="./images/yoko_blue_mini.png" alt="beyondS ロゴ">
+        <span>beyondS ツール</span>
+      </a>
+      <nav class="site-nav" aria-label="主要メニュー">
+        <a href="./index.html#util">便利ツール</a>
+        <a href="./index.html#dev">プログラミング</a>
+        <a href="./index.html#web">ウェブ制作</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <section class="hero">
+        <h1>サイトマップXML → URL一覧</h1>
+        <p>Sitemap XMLを貼り付け、`<loc>` 要素のURL一覧を抽出します。</p>
+      </section>
+
+      <section class="section surface">
+        <div class="stack">
+          <label for="xmlInput">Sitemap XML</label>
+          <textarea id="xmlInput" rows="10" placeholder="&lt;urlset&gt; ... &lt;loc&gt;https://example.com/&lt;/loc&gt; ..."></textarea>
+        </div>
+        <div class="inline-controls">
+          <button class="btn btn-primary" type="button" onclick="extract()">抽出</button>
+          <button class="btn btn-ghost" type="button" onclick="resetFields()">リセット</button>
+        </div>
+        <div class="stack">
+          <label for="urlOutput">URL一覧</label>
+          <textarea id="urlOutput" rows="10" placeholder="結果がここに表示されます"></textarea>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+  <script>
+    function extract() {
+      const xml = document.getElementById("xmlInput").value;
+      try {
+        const doc = new DOMParser().parseFromString(xml, "application/xml");
+        const locs = Array.from(doc.getElementsByTagName("loc")).map(el => el.textContent.trim()).filter(Boolean);
+        document.getElementById("urlOutput").value = locs.join("\n");
+      } catch (e) {
+        alert("XMLの解析に失敗しました。");
+      }
+    }
+
+    function resetFields() {
+      document.getElementById("xmlInput").value = "";
+      document.getElementById("urlOutput").value = "";
+    }
+  </script>
+  <script src="./js/footer.js"></script>
+</body>
+</html>

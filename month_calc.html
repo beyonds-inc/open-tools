@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>期間の月数計算 | beyondS</title>
+  <meta name="description" content="開始年月と終了年月から月数を計算します（両端含む）。">
+  <link rel="stylesheet" href="./main.css">
+  <link rel="icon" href="./images/yoko_blue_mini.png">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container inner">
+      <a class="brand" href="./index.html">
+        <img src="./images/yoko_blue_mini.png" alt="beyondS ロゴ">
+        <span>beyondS ツール</span>
+      </a>
+      <nav class="site-nav" aria-label="主要メニュー">
+        <a href="./index.html#util">便利ツール</a>
+        <a href="./index.html#dev">プログラミング</a>
+        <a href="./index.html#web">ウェブ制作</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <section class="hero">
+        <h1>期間の月数計算</h1>
+        <p>開始年月と終了年月を入れると、両端を含めた月数を計算します。</p>
+      </section>
+
+      <section class="section surface">
+        <div class="two-col">
+          <div class="stack">
+            <label for="startYear">開始</label>
+            <div class="date-controls">
+              <span class="date-unit">
+                <input class="date-input" type="number" id="startYear" placeholder="2024">
+                <span>年</span>
+              </span>
+              <span class="date-unit">
+                <input class="date-input" type="number" id="startMonth" min="1" max="12" placeholder="1">
+                <span>月</span>
+              </span>
+            </div>
+          </div>
+          <div class="stack">
+            <label for="endYear">終了</label>
+            <div class="date-controls">
+              <span class="date-unit">
+                <input class="date-input" type="number" id="endYear" placeholder="2024">
+                <span>年</span>
+              </span>
+              <span class="date-unit">
+                <input class="date-input" type="number" id="endMonth" min="1" max="12" placeholder="3">
+                <span>月</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="inline-controls">
+          <button type="button" class="btn btn-primary" onclick="calculateMonths()">計算</button>
+          <button type="button" class="btn btn-ghost" onclick="resetFields()">リセット</button>
+        </div>
+
+        <div class="stack">
+          <label for="result">結果</label>
+          <input id="result" type="text" readonly value="期間: ">
+          <p class="note">例：2024/1 〜 2024/3 なら「3ヶ月間」</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+  <script>
+    function calculateMonths() {
+      const startYear = parseInt(document.getElementById('startYear').value);
+      const startMonth = parseInt(document.getElementById('startMonth').value);
+      const endYear = parseInt(document.getElementById('endYear').value);
+      const endMonth = parseInt(document.getElementById('endMonth').value);
+      if ([startYear, startMonth, endYear, endMonth].some(v => Number.isNaN(v))) {
+        alert('すべての項目を入力してください。');
+        return;
+      }
+      const totalMonths = (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
+      document.getElementById('result').value = totalMonths > 0 ? `期間: ${totalMonths} ヶ月間` : '終了が開始より前です。';
+    }
+
+    function resetFields() {
+      ['startYear','startMonth','endYear','endMonth'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('result').value = '期間: ';
+    }
+  </script>
+  <script src="./js/footer.js"></script>
+</body>
+</html>
