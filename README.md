@@ -2,6 +2,8 @@
 
 beyondSが提供する、ブラウザで動く小さなWebツール集です。
 HTML + CSS + JavaScript（必要に応じてPHP）で構成されています。
+公開サイト: https://tool.beyonds.ai/
+powered by beyondS,Inc.
 
 ## 使い方
 
