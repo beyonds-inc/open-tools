@@ -384,6 +384,11 @@ pre, code {
   gap: 14px;
 }
 
+.month-calc-row {
+  display: grid;
+  gap: 14px;
+}
+
 .input-compact {
   width: 110px;
 }
@@ -391,6 +396,13 @@ pre, code {
 @media (min-width: 641px) {
   .date-controls {
     flex-wrap: nowrap;
+  }
+}
+
+@media (min-width: 900px) {
+  .month-calc-row {
+    grid-template-columns: minmax(260px, 1fr) minmax(260px, 1fr) auto auto;
+    align-items: end;
   }
 }
 
