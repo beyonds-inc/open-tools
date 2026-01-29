@@ -64,11 +64,11 @@ Vue.js等のライブラリが必要な場合は、ツール固有の `<script>`
   <script src="./js/footer.js"></script>
 ```
 
-**出力先:** `/Users/taka/www/beyonds/tool/[ファイル名].html`
+**出力先:** プロジェクトルート直下に `[ファイル名].html` として配置する。
 
 ### 3. index.html にカード追加
 
-`/Users/taka/www/beyonds/tool/index.html` の該当カテゴリセクション内の `<div class="card-grid">` の末尾に追加:
+プロジェクトルートの `index.html` の該当カテゴリセクション内の `<div class="card-grid">` の末尾に追加:
 
 ```html
           <article class="card">
