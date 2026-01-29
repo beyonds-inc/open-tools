@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ツールタイトル | beyondS</title>
+  <meta name="description" content="ここにページの概要を記述します。">
+  <link rel="stylesheet" href="./main.css">
+  <link rel="icon" href="./images/yoko_blue_mini.png">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container inner">
+      <a class="brand" href="./index.html">
+        <img src="./images/yoko_blue_mini.png" alt="beyondS ロゴ">
+        <span>beyondS ツール</span>
+      </a>
+      <nav class="site-nav" aria-label="主要メニュー">
+        <a href="./index.html#util">便利ツール</a>
+        <a href="./index.html#dev">プログラミング</a>
+        <a href="./index.html#web">ウェブ制作</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <section class="hero">
+        <h1>ツールタイトル</h1>
+        <p>このページで提供するツールの説明を1〜2文で。利用方法や想定シーンを簡潔に。</p>
+      </section>
+
+      <section class="section surface" id="tool">
+        <div class="section-head">
+          <h2>ツールセクション見出し</h2>
+          <!-- 操作説明や補足が不要なら、この段落は削除してください -->
+          <p>操作説明や補足をここに記載（不要なら削除可）。</p>
+        </div>
+
+        <!-- ここからツール本体 -->
+        <div class="tool-panel">
+          <div class="stack">
+            <label for="inputField">入力例</label>
+            <textarea id="inputField" rows="6" placeholder="入力欄を自由に差し替えてください"></textarea>
+          </div>
+
+          <div class="inline-controls">
+            <button type="button" class="btn btn-primary">実行</button>
+            <button type="button" class="btn btn-ghost">リセット</button>
+          </div>
+
+          <div class="stack">
+            <label for="outputField">出力例</label>
+            <textarea id="outputField" rows="6" placeholder="結果表示欄を自由に差し替えてください"></textarea>
+            <p class="note">必要に応じて補足や注意書きをここに追加。</p>
+          </div>
+        </div>
+        <!-- ここまでツール本体 -->
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+  <script src="./js/footer.js"></script>
+</body>
+</html>
