@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>日付加減算ツール | beyondS</title>
+  <meta name="description" content="指定した日付からx日後・x日前の日付を計算します。うるう年にも対応。">
+  <link rel="stylesheet" href="./main.css">
+  <link rel="icon" href="./images/yoko_blue_mini.png">
+  <style>
+    .input-row {
+      display: flex;
+      gap: 16px;
+      align-items: flex-end;
+    }
+    .input-row .stack { flex: 1; }
+    .output-row .stack { max-width: 400px; }
+    @media (max-width: 640px) {
+      .input-row { flex-direction: column; align-items: stretch; }
+      .input-row .label-spacer { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container inner">
+      <a class="brand" href="./index.html">
+        <img src="./images/yoko_blue_mini.png" alt="beyondS ロゴ">
+        <span>beyondS ツール</span>
+      </a>
+      <nav class="site-nav" aria-label="主要メニュー">
+        <a href="./index.html#util">便利ツール</a>
+        <a href="./index.html#dev">プログラミング</a>
+        <a href="./index.html#web">ウェブ制作</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <section class="hero">
+        <h1>日付加減算ツール</h1>
+        <p>基準日を指定し、日数を加算または減算した日付を計算します。うるう年にも対応しています。</p>
+      </section>
+
+      <section class="section surface" id="tool">
+        <div class="section-head">
+          <h2>日付の加減算</h2>
+          <p>基準日と日数を入力すると、結果がリアルタイムで表示されます。</p>
+        </div>
+
+        <div class="tool-panel">
+          <div class="input-row">
+            <div class="stack">
+              <label for="baseDate">基準日</label>
+              <input type="date" id="baseDate">
+            </div>
+            <div class="stack">
+              <label for="days">日数</label>
+              <input type="number" id="days" min="0" value="0" placeholder="日数を入力">
+            </div>
+            <div class="stack">
+              <label class="label-spacer">&nbsp;</label>
+              <div class="inline-controls">
+                <label><input type="radio" name="direction" value="add" checked> 日後</label>
+                <label><input type="radio" name="direction" value="sub"> 日前</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="output-row">
+            <div class="stack">
+              <label for="result">結果</label>
+              <input type="text" id="result" readonly placeholder="ここに結果が表示されます">
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+  <script>
+    (function () {
+      var baseDate = document.getElementById('baseDate');
+      var days = document.getElementById('days');
+      var result = document.getElementById('result');
+
+      // 今日の日付をデフォルトにセット
+      var today = new Date();
+      var yyyy = today.getFullYear();
+      var mm = String(today.getMonth() + 1).padStart(2, '0');
+      var dd = String(today.getDate()).padStart(2, '0');
+      baseDate.value = yyyy + '-' + mm + '-' + dd;
+
+      function getDirection() {
+        var radios = document.getElementsByName('direction');
+        for (var i = 0; i < radios.length; i++) {
+          if (radios[i].checked) return radios[i].value;
+        }
+        return 'add';
+      }
+
+      function formatDate(d) {
+        var y = d.getFullYear();
+        var m = String(d.getMonth() + 1).padStart(2, '0');
+        var day = String(d.getDate()).padStart(2, '0');
+        var weekdays = ['日', '月', '火', '水', '木', '金', '土'];
+        var w = weekdays[d.getDay()];
+        return y + '年' + m + '月' + day + '日（' + w + '）';
+      }
+
+      function calc() {
+        if (!baseDate.value) {
+          result.value = '';
+          return;
+        }
+        var parts = baseDate.value.split('-');
+        var base = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+        var n = parseInt(days.value, 10) || 0;
+        var dir = getDirection();
+        var offset = dir === 'add' ? n : -n;
+        var target = new Date(base.getTime());
+        target.setDate(target.getDate() + offset);
+        result.value = formatDate(target);
+      }
+
+      baseDate.addEventListener('input', calc);
+      days.addEventListener('input', calc);
+      var radios = document.getElementsByName('direction');
+      for (var i = 0; i < radios.length; i++) {
+        radios[i].addEventListener('change', calc);
+      }
+
+      // 初期計算
+      calc();
+    })();
+  </script>
+  <script src="./js/footer.js"></script>
+</body>
+</html>
