@@ -40,6 +40,48 @@ AskUserQuestionツールを使って以下を確認する:
 
 **tool-panel内のUI:** ツールの要件に応じて自由に構成する。利用可能なCSSクラスやUIパターンの詳細は `references/project-structure.md` を参照。
 
+**レイアウトの原則:**
+
+- フォーム要素はなるべく横1列に並べる。入力(input)行と出力(output)行を分ける
+- 横並びにはページ内 `<style>` で `display: flex` の行コンテナを使う
+- `align-items: flex-end` で入力欄の底辺を揃え、ラベルなし要素には `<label class="label-spacer">&nbsp;</label>` で高さを合わせる
+- モバイル(640px以下)では `flex-direction: column` にフォールバックし、`.label-spacer` は `display: none` にして無駄な空白を消す
+
+```html
+<!-- レイアウト例 -->
+<style>
+  .input-row {
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+  }
+  .input-row .stack { flex: 1; }
+  @media (max-width: 640px) {
+    .input-row { flex-direction: column; align-items: stretch; }
+    .input-row .label-spacer { display: none; }
+  }
+</style>
+
+<div class="tool-panel">
+  <div class="input-row">
+    <div class="stack">
+      <label for="field1">ラベル1</label>
+      <input type="text" id="field1">
+    </div>
+    <div class="stack">
+      <label class="label-spacer">&nbsp;</label>
+      <!-- ラベル不要な要素 -->
+    </div>
+  </div>
+  <div class="output-row">
+    <div class="stack">
+      <label for="result">結果</label>
+      <input type="text" id="result" readonly>
+    </div>
+  </div>
+</div>
+```
+
 **JavaScript:** `</main>` の後、`<footer>` の前に `<script>` タグで記述する。
 
 ```html
@@ -98,6 +140,7 @@ Vue.js等のライブラリが必要な場合は、ツール固有の `<script>`
 - ファビコンは `./images/yoko_blue_mini.png`
 - ヘッダーナビのリンク先は `./index.html#util` `./index.html#dev` `./index.html#web`
 - ブラウザ完結型ツール (データはサーバーに送信しない) が基本方針
+- テキストの冗長な補足(例: 技術的な実装説明)はユーザーに不要な場合が多いので入れない
 
 ## リソース
 

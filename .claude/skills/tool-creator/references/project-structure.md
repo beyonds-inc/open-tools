@@ -66,6 +66,9 @@ PHP等の特殊技術を使う場合はpillバッジを付ける:
 - `.date-controls` / `.date-unit` - 日付入力グループ
 - `.scroll-area` - スクロール可能エリア (max-height: 420px)
 
+### フォーム要素の共通スタイル対象 (main.css)
+`input[type="text"]`, `input[type="number"]`, `input[type="color"]`, `input[type="email"]`, `input[type="url"]`, `input[type="date"]`, `textarea`, `select`
+
 ### ボタン
 - `.btn .btn-primary` - プライマリボタン (青)
 - `.btn .btn-ghost` - ゴーストボタン (白、ボーダー)
