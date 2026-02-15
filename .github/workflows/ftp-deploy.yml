@@ -29,3 +29,4 @@ jobs:
             **/.github/**
             **/*.md
             **/.DS_Store
+            **/.claude/**
