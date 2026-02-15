@@ -18,6 +18,7 @@ HTML + CSS + JavaScript（必要に応じてPHP）で構成されています。
 - 追加ツールはルート直下に `tool-name.html`
 - 共通スタイルは `main.css`
 - フッターは `js/footer.js` で自動挿入
+- GitHub Actions（FTP Deploy）で自動デプロイ
 
 ## ライセンス
 
