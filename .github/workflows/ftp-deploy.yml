@@ -1,0 +1,31 @@
+name: FTP Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: sv3134.xserver.jp
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /
+          local-dir: ./
+          # 既にアップロード済みのファイルはスキップ（差分のみアップロード）
+          # dangerous-clean-slate: false により、状態ファイルを保持して差分デプロイを実現
+          dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/*.md
+            **/.DS_Store
