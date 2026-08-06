@@ -1,5 +1,7 @@
 # Repository Guidelines
 
+**日本語の用語（ツール / ユーティリティ / 小ツール 等）を書く前に [`docs/glossary.md`](docs/glossary.md)（ユビキタス言語辞書）を読むこと。** 正式表記・使ってはいけない別名・対応するコード上の識別子を定義している。辞書と実装が食い違っていたら実装が正で、辞書側を直す（§5）。
+
 ## Project Structure & Module Organization
 - ルート直下に単体ツールの HTML/PHP を配置します（例: `tag.html`, `csv2json.html`, `tostr.php`）。
 - 共通スタイルは `main.css`、フッターは `js/footer.js`、画像は `images/` を使用します。
