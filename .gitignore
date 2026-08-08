@@ -1,1 +1,14 @@
 .DS_Store
+# secrets / credentials (do not commit) — beyonds-claude-guardrails
+.env
+.env.local
+.env.*.local
+.env.production
+*.pem
+*.key
+*.p12
+*.pfx
+auth.json
+credentials.json
+secrets/
+*.secret
